@@ -1,0 +1,113 @@
+{
+    "configuration": {
+        "name": "Unrestricted Inbound Firewall Rule on port XXXX",
+        "description": "Firewall rules has ingress of 0.0.0.0/0 on port XXXX",
+        "service": "CloudVPC",
+        "resourceType": "cloudvpc-firewallrules",
+        "severity": "HIGH",
+        "enabled": true,
+        "provider": "gcp",
+        "categories": [
+            "security"
+        ],
+        "remediationNotes": "Review and update the inbound firewall rule to disallow source 0.0.0.0/0 to port XXXX",
+        "attributes": [
+            {
+                "name": "sourceRanges",
+                "path": "data.sourceRanges[*]",
+                "required": false
+            },
+            {
+                "name": "allowedPorts",
+                "path": "data.allowed[*].ports[*]",
+                "required": false
+            },
+            {
+                "name": "direction",
+                "path": "data.direction",
+                "required": true
+            }
+        ],
+        "rules": [
+            {
+                "conditions": {
+                    "any": [
+                        {
+                            "fact": "sourceRanges",
+                            "operator": "doesNotContain",
+                            "value": "0.0.0.0/0"
+                        },
+                        {
+                            "fact": "allowedPorts",
+                            "operator": "doesNotContain",
+                            "value": "XXXX"
+                        },
+                        {
+                            "fact": "direction",
+                            "operator": "notEqual",
+                            "value": "INGRESS"
+                        }                            
+                    ]
+                },
+                "event": {
+                    "type": "Check for inbound unrestricted access on specific port"
+                }
+            }
+        ]
+    },
+    "resource": {
+        "accountId": "933d1234-1234-1234-1234-1234ce55ce62",
+        "organisationId": "12345234-6789-6789-6789-2345ce557890",
+        "resourceId": "1234123412349999234",
+        "service": "CloudVPC",
+        "ccrn": "ccrn:gcp:933d1234-1234-1234-1234-1234ce55ce62:CloudVPC:global:1234123412349999234",
+        "region": "global",
+        "descriptorType": "cloudvpc-firewallrules",
+        "data": {
+            "kind": "compute#firewall",
+            "id": "1234123412349999234",
+            "creationTimestamp": "2022-02-17T16:09:53.504-08:00",
+            "name": "test-firewall-rule",
+            "description": "",
+            "network": "https://www.googleapis.com/compute/v1/projects/xyz/global/networks/default",
+            "priority": 1000,
+            "sourceRanges": [
+                "0.0.0.0/0",
+                "10.0.0.0/0"
+            ],
+            "targetTags": [
+                "http-server"
+            ],
+            "allowed": [
+                {
+                    "IPProtocol": "tcp",
+                    "ports": [
+                        "80"
+                    ]
+                },
+                {
+                    "IPProtocol": "tcp",
+                    "ports": [
+                        "443"
+                    ]
+                }                
+            ],
+            "direction": "INGRESS",
+            "logConfig": {
+                "enable": false
+            },
+            "disabled": false,
+            "selfLink": "https://www.googleapis.com/compute/v1/projects/zzzzz/global/firewalls/test-firewall-rule",
+            "resourceId": "1234123412349999234",
+            "Tags": []
+        },
+        "name": "CloudVPC FirewallRule",
+        "link": "https://console.cloud.google.com/networking/zzzzz",
+        "linkTitle": "1234123412349999234",
+        "attributeErrors": [],
+        "provider": "gcp",
+        "projectId": "yyyyy",
+        "lastModifiedDate": 1650951283031,
+        "lastModifiedBy": "SYSTEM"
+    }
+}
