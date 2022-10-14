@@ -1,0 +1,36 @@
+{
+  "name": "S3 bucket has Server Side Encryption",
+  "description": "We want to make sure there is correct encryption",
+  "service": "S3",
+  "resourceType": "s3-bucket",
+  "severity": "HIGH",
+  "enabled": true,
+  "provider": "aws",
+  "categories": [
+    "security"
+  ],
+  "remediationNotes": "If this is broken, please follow these steps:\n1. Step one \n2. Step two\n",
+  "attributes": [
+    {
+      "name": "encryptionAlgorithm",
+      "path": "data.Encryption.Rules[*].ApplyServerSideEncryptionByDefault.SSEAlgorithm",
+      "required": true
+    }
+  ],
+  "rules": [
+    {
+      "conditions": {
+        "all": [
+          {
+            "fact": "encryptionAlgorithm",
+            "operator": "contains",
+            "value": "AES256"
+          }
+        ]
+      },
+      "event": {
+        "type": "has AES256 encryption"
+      }
+    }
+  ]
+}
