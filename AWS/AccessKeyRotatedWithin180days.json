@@ -47,6 +47,7 @@
     "region": "global",
     "descriptorType": "iam-user",
     "data": {
+      "resourceId": "mock-iam-user",
       "AccessKeyMetadata": [
         {
           "UserName": "some-user",
