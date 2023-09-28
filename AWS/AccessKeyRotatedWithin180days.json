@@ -1,0 +1,73 @@
+{
+  "configuration": {
+    "name": "Custom Rule - Check if IAM User access key rotated within 180 days",
+    "description": "Check if IAM User access key rotated within 180 days",
+    "service": "IAM",
+    "resourceType": "iam-user",
+    "severity": "HIGH",
+    "enabled": true,
+    "provider": "aws",
+    "categories": [
+      "security"
+    ],
+    "remediationNotes": "Rotate access key",
+    "attributes": [
+      {
+        "name": "key_create_date",
+        "path": "data.AccessKeyMetadata[0].CreateDate",
+        "required": true
+      }
+    ],
+    "rules": [
+      {
+        "conditions": {
+          "any": [
+            {
+              "fact": "key_create_date",
+              "operator": "dateComparison",
+              "value": {
+                "days": 180,
+                "operator": "within"
+              }
+            }
+          ]
+        },
+        "event": {
+          "type": "Check if IAM User access key rotated within 180 days"
+        }
+      }
+    ]
+  },
+  "resource": {
+    "accountId": "933d1234-1234-1234-1234-1234ce55ce62",
+    "organisationId": "12345234-6789-6789-6789-2345ce557890",
+    "resourceId": "1234123412349999234",
+    "service": "IAM",
+    "ccrn": "ccrn:aws:933d1234-1234-1234-1234-1234ce55ce62:IAM:global:user-1234123412349999234",
+    "region": "global",
+    "descriptorType": "iam-user",
+    "data": {
+      "resourceId": "mock-iam-user",
+      "AccessKeyMetadata": [
+        {
+          "UserName": "some-user",
+          "AccessKeyId": "ABCVDER123456",
+          "Status": "Active",
+          "CreateDate": "2023-07-24T09:08:04.000Z",
+          "AccessKeyLastUsed": {
+            "ServiceName": "N/A",
+            "Region": "N/A"
+          }
+        }
+      ],
+      "SSHPublicKeys": []
+    },
+    "name": "IAM User",
+    "link": "https://console.aws.amazon.com/iam/home?region=global#/users/1234123412349999234",
+    "linkTitle": "users-1234123412349999234",
+    "errors": [],
+    "provider": "aws",
+    "lastModifiedDate": 1695117473531,
+    "lastModifiedBy": "SYSTEM"
+  }
+}
